@@ -7,6 +7,9 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((connection) => {
     //Respond to multiple PINGs: connection.on can automatically respond to multiple pings
     // No need to create a loop
+    //
+    //Handle concurrent clients:
+    // createServer function supports concurrency, no need to make any changes
     connection.on("data", () => {
         connection.write("+PONG\r\n");
     });
