@@ -23,7 +23,7 @@ function getResponse(data) {
     //     return 'REJECT';
     // }
     console.log(data)
-    const arr = data.split('\\r\\n')
+    const arr = data.split('\r\n')
     const command = arr[2]
     const value = arr[4]
     console.log(arr)
