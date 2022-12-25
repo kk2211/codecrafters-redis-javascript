@@ -9,10 +9,32 @@ const server = net.createServer((connection) => {
     // No need to create a loop
     //
     //Handle concurrent clients:
-    // createServer function supports concurrency, no need to make any changes
-    connection.on("data", () => {
-        connection.write("+PONG\r\n");
+    // createServer function supports concurrency, no need to make any changeskohlikabir101@gmail.com
+    connection.on("data", (data) => {
+        const dataString = data.toString()
+        const message = getResponse(dataString)
+        connection.write(message)
+
     });
 });
+
+function getResponse(data) {
+    // if (!data.startsWith('*')) {
+    //     return 'REJECT';
+    // }
+    console.log(data)
+    const arr = data.split('\\r\\n')
+    const command = arr[2]
+    const value = arr[4]
+    switch (command) {
+        case 'ECHO':
+            return `+${value}\r\n`
+        case 'PING':
+            return "+PONG\r\n"
+        default:
+            return "+PONG\r\n"
+    }
+
+}
 
 server.listen(6379, "127.0.0.1");
