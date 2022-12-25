@@ -26,10 +26,11 @@ function getResponse(data) {
     const arr = data.split('\\r\\n')
     const command = arr[2]
     const value = arr[4]
-    switch (command) {
-        case 'ECHO':
+    console.log(arr)
+    switch (command.toLowerCase()) {
+        case 'echo':
             return `+${value}\r\n`
-        case 'PING':
+        case 'ping':
             return "+PONG\r\n"
         default:
             return "+PONG\r\n"
