@@ -34,7 +34,7 @@ function getResponse(data) {
             map[key] = value
             return "+OK\r\n"
         case 'get':
-            return map[key]?`+${store[key]}\r\n`:"$-1\r\n"
+            return map[key]?`+${map[key]}\r\n`:"$-1\r\n"
         case 'ping':
             return "+PONG\r\n"
         default:
