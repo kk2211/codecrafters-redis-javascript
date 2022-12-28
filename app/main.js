@@ -25,7 +25,7 @@ function getResponse(data) {
     const arr = data.split('\r\n')
     const command = arr[2]
     const key = arr[4]
-    const value = command[6]?? ""
+    const value = arr[6]?? ""
     
     switch (command.toLowerCase()) {
         case 'echo':
