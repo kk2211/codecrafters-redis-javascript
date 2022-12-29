@@ -28,6 +28,7 @@ function getResponse(data) {
     const value = arr[6]?? ""
     const ttl = arr[10]??""
     const timestamp = ttl!=""?(new Date().getTime() + ttl) : 0
+    console.log(timestamp)
     
     switch (command.toLowerCase()) {
         case 'echo':
@@ -39,6 +40,7 @@ function getResponse(data) {
             if (map[key]){
                 const currTime = new Date().getTime()
                 const expTime = map[key]["timestamp"]
+                console.log(expTime)
 
                 if (expTime>=currTime){
                     return "$-1\r\n"
