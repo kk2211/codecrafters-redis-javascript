@@ -26,15 +26,29 @@ function getResponse(data) {
     const command = arr[2]
     const key = arr[4]
     const value = arr[6]?? ""
+    const ttl = arr[10]??""
+    const timestamp = ttl!=""?(new Date().getTime() + ttl) : 0
     
     switch (command.toLowerCase()) {
         case 'echo':
             return `+${key}\r\n`
         case 'set':
-            map[key] = value
+            map[key] = {"value":value,"timestamp":timestamp}
             return "+OK\r\n"
         case 'get':
-            return map[key]?`+${map[key]}\r\n`:"$-1\r\n"
+            if (map[key]){
+                const currTime = new Date().getTime()
+                const expTime = map[key]["timestamp"]
+
+                if (expTime>=currTime){
+                    return "$-1\r\n"
+                }else{
+                    return map[key]["value"]
+                }
+            }
+            else {
+                return "$-1\r\n"
+            }
         case 'ping':
             return "+PONG\r\n"
         default:
