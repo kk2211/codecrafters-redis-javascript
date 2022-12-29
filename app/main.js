@@ -1,4 +1,5 @@
 const net = require("net");
+const { cpuUsage } = require("process");
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
@@ -27,7 +28,7 @@ function getResponse(data) {
     const key = arr[4]
     const value = arr[6]?? ""
     const ttl = arr[10]??""
-    const timestamp = ttl!=""?(new Date().getTime() + ttl) : 0
+    const timestamp = ttl!=""?(new Date().getTime() + ttl) : null
     console.log(timestamp)
     
     switch (command.toLowerCase()) {
@@ -41,11 +42,16 @@ function getResponse(data) {
                 const currTime = new Date().getTime()
                 const expTime = map[key]["timestamp"]
                 console.log(expTime)
-
-                if (expTime>=currTime){
-                    return "$-1\r\n"
-                }else{
-                    return map[key]["value"]
+                if (expTime){
+                    if (currTime<expTime){
+                        return `+${map[key]["value"]}\r\n`
+                    }
+                    else{
+                        return "$-1\r\n"
+                    }
+                }
+                else{
+                    return `+${map[key]["value"]}\r\n`
                 }
             }
             else {
