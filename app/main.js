@@ -27,8 +27,8 @@ function getResponse(data) {
     const command = arr[2]
     const key = arr[4]
     const value = arr[6]?? ""
-    const ttl = arr[10]??""
-    const timestamp = ttl!=""?(new Date().getTime() + ttl) : null
+    const ttl = parseInt(array[10])
+    const timestamp = ttl?(new Date().getTime() + ttl) : null
     console.log(timestamp)
     
     switch (command.toLowerCase()) {
@@ -41,7 +41,6 @@ function getResponse(data) {
             if (map[key]){
                 const currTime = new Date().getTime()
                 const expTime = map[key]["timestamp"]
-                console.log(expTime)
                 if (expTime){
                     if (currTime<expTime){
                         return `+${map[key]["value"]}\r\n`
