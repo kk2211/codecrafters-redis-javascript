@@ -27,7 +27,7 @@ function getResponse(data) {
     const command = arr[2]
     const key = arr[4]
     const value = arr[6]?? ""
-    const ttl = parseInt(array[10])
+    const ttl = parseInt(arr[10])
     const timestamp = ttl?(new Date().getTime() + ttl) : null
     console.log(timestamp)
     
